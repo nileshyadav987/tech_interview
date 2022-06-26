@@ -10,3 +10,5 @@ Steps to run project
 Steps to check google login
 1. get your auto token from google https://developers.google.com/oauthplayground
 2. copy and paste id_token in endpoint loginwithgoogle
+
+Note: image upload will not work on heroku
