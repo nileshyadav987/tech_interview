@@ -160,9 +160,9 @@ app.put('/editbook', [validate.bookId(), validate.title(), validate.author(), va
       mybook.dateOfPublication = moment(input.dateOfPublication, "DD/MM/YYYY").toDate();
 
 
-      if (Boolean(req.files.photo)) {
+      if (Boolean(req.files.image)) {
         mybook.image = await fileupload.upload(
-          req.files.photo,
+          req.files.image,
           __dirname + process.env.IMAGE_PATH,
           mybook.image ? mybook.image.split("/")[2] : null
         );
@@ -192,9 +192,9 @@ app.post('/addbook', [validate.title(), validate.author(), validate.dateOfPublic
         chapters: Boolean(input.chapters) ? input.chapters.split(",") : [],
         dateOfPublication: moment(input.dateOfPublication, "DD/MM/YYYY").toDate()
       });
-      if (Boolean(req.files.photo)) {
+      if (Boolean(req.files.image)) {
         newbook.image = await fileupload.upload(
-          req.files.photo,
+          req.files.image,
           __dirname + process.env.IMAGE_PATH
         );
       }
