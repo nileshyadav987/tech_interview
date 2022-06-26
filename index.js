@@ -10,6 +10,7 @@ const Book = require("./models/book");
 const User = require("./models/user");
 const moment = require("moment");
 const axios = require("axios");
+require('dotenv').config();
 
 const validate = require("./library/validate");
 const { auth } = require("./library/auth");
@@ -35,7 +36,7 @@ app.use(express.static("public"));
 app.get('/', function (req, res) {
   return res.send(`<p>Welcome,</p>
 
-    <p>base URL-&nbsp;<a href="https://frozen-brook-79786.herokuapp.com/">https://frozen-brook-79786.herokuapp.com/</a></p>
+    <p>base URL-&nbsp;<a href="https://frozen-brook-79786.fileupload.com/">https://frozen-brook-79786.fileupload.com/</a></p>
 
     <p>Postman collection-&nbsp;<a href="https://www.getpostman.com/collections/b780499397ff7c6c2e35">https://www.getpostman.com/collections/b780499397ff7c6c2e35</a></p>
   `);
@@ -160,7 +161,7 @@ app.put('/editbook', [validate.bookId(), validate.title(), validate.author(), va
       mybook.dateOfPublication = moment(input.dateOfPublication, "DD/MM/YYYY").toDate();
 
 
-      if (Boolean(req.files) && Boolean(req.files.image)) {
+      if (process.env.fileupload == "yes" && Boolean(req.files) && Boolean(req.files.image)) {
         mybook.image = await fileupload.upload(
           req.files.image,
           __dirname + process.env.IMAGE_PATH,
@@ -192,7 +193,8 @@ app.post('/addbook', [validate.title(), validate.author(), validate.dateOfPublic
         chapters: Boolean(input.chapters) ? input.chapters.split(",") : [],
         dateOfPublication: moment(input.dateOfPublication, "DD/MM/YYYY").toDate()
       });
-      if (Boolean(req.files) && Boolean(req.files.image)) {
+      console.log(process.env.fileupload, "hhfhf");
+      if (process.env.fileupload == "yes" && Boolean(req.files) && Boolean(req.files.image)) {
         newbook.image = await fileupload.upload(
           req.files.image,
           __dirname + process.env.IMAGE_PATH
